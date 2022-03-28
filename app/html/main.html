@@ -1,0 +1,144 @@
+<html>
+
+<head>
+	<link rel="stylesheet" href="../css/style.css">
+	<script src="../js/lib/ZohoEmbededAppSDK.min.js"></script>
+	<script src="../js/custom.js"></script>
+	<script src="../js/jquery-min.js"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/litera/bootstrap.min.css">
+</head>
+
+<body>
+
+
+	<div class="container p-4">
+		<div class="row">
+			<div class="col-md-6 offset-md-3">
+				<div class="card" style="background-color: #0f206c;">
+					<div class="card-body">
+						<h2 style="color: #f7be00;">Request Credit Analysis</h2>
+						<hr>
+						<form method="post" enctype="multipart/form-data" id="form">
+
+							<div class="form-group">
+								<label for="nombre">Nombre del Cliente:</label>
+								<input type="text" name="cliente" class="form-control" 
+									id="nombre" autofocus required>
+							</div>
+							<hr>
+							<div class="form-group">
+								<label for="cedula">Número de Identificación:</label>
+								<input type="text" name="ide" class="form-control" id="cedula" required>
+							</div>
+							
+							<hr>
+							<div class="form-group">
+								<label for="tamano">Tamaño del Sistema(kW):</label>
+								<input type="text" name="tamano" class="form-control"
+									 id="tamano" required>
+							</div>
+							<hr>
+							<div class="form-group">
+								<label for="precio">Precio del Sistema(USD):</label>
+								<input type="text" name="precio" class="form-control" id="precio" required>
+							</div>
+							<hr>
+							<div class="form-group">
+								<label for="vendedor">Nombre del vendedor:</label>
+								<input type="text" name="nombre" class="form-control"
+									id="vendedor" required>
+									<input type="email" name="correo" id="correo" required style="opacity: 0;">
+									
+									<hr>
+									
+									
+							</div>
+							<div class="form-group">
+								<label for="URL">URL:</label>
+								<input type="text" name="URL" id="URL" class="form-control" required>
+							</div>
+							<hr>
+							<br>
+							
+							<label for="file">Estados Finacieros</label>
+							<div class="form-group">
+								<input   type="file" name="estados" class="form-control" placeholder="Estados Financieros"
+									multiple id="file" >
+							</div>
+							<hr>
+							<input type="submit" id="button" value="Send Request" class="btn btn-success" style="background-color: #f7be00;">
+
+						</form>
+
+						<script type="text/javascript"
+							src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+						<script type="text/javascript">
+							emailjs.init('FpMoLDAAALS_YEncC')
+						</script>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--Elementos de estilos basicos-->
+	<style>
+		hr{
+			background-color: #0099ce;
+		}
+		.form-control:hover {
+			background-color: #0099ce;
+			color: aliceblue;
+			transition: 1s;
+		}
+		.form-control::placeholder:hover {
+			background-color: aliceblue;
+			transition: 1s;
+		}
+label{
+	color: aliceblue;
+}
+		#envi {
+			opacity: 0;
+		}
+	</style>
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+			initializeWidget();
+		})
+	</script>
+
+	<script type="text/javascript">
+		
+		const btn = document.getElementById('button');
+
+		document.getElementById('form')
+			.addEventListener('submit', function (event) {
+				event.preventDefault();
+
+
+				btn.value = 'Sending...';
+
+				const serviceID = 'default_service';
+				const templateID = 'template_e2gbm5x';
+
+				emailjs.sendForm(serviceID, templateID, this)
+					.then(() => {
+						btn.value = 'Send Request';
+						alert('Your request has been sent successfully!');
+					}, (err) => {
+						btn.value = 'Send Request';
+						alert(JSON.stringify(err));
+					});
+				function formSubmit(event) {
+					event.preventDefault();
+					emailjs.sendForm(serviceID, templateID, this);
+				}
+			});
+
+
+	</script>
+</body>
+
+</html>
